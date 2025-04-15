@@ -4,12 +4,7 @@
     "version": "1.0",
     "description": "A study helper extension with Pomodoro timer, custom background, to-do list, and notification silencer.",
     "action": {
-      "default_popup": "popup.html",
-      "default_icon": {
-        "16": "assets/icon16.png",
-        "48": "assets/icon48.png",
-        "128": "assets/icon128.png"
-      }
+      "default_popup": "popup.html"
     },
     "background": {
       "service_worker": "background.js"
@@ -20,10 +15,6 @@
     ],
     "host_permissions": [
       "<all_urls>"
-    ],
-    "default_icons": {
-      "128": "assets/icon128.png"
-    },
-    "options_page": "options.html"
+    ]
   }
   

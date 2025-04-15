@@ -1,0 +1,45 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+    padding: 20px;
+    width: 220px;
+    background-color: #f5f5f5;
+    color: #1F2F16;
+  }
+  
+  #timer {
+    font-size: 28px;
+    margin: 20px auto;
+    padding: 15px;
+    width: 120px;
+    background-color: #88A096;
+    border: 3px solid #1F2F16;
+    border-radius: 15px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  /* When break mode is on */
+.break-mode #timer {
+  background-color: #ffcad4;
+  border-color: #f4acb7;
+  color: #1F2F16;
+}
+
+button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: 2px solid #1F2F16;
+  border-radius: 6px;
+  background-color: #ffcad4;
+  color: #1F2F16;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #f4acb7;
+  border-color: #ffcad4;
+}
