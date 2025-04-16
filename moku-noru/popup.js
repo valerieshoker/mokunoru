@@ -1,11 +1,15 @@
 // popup.js
 
 let timerDuration = 25 * 60; // 25 minutes
+let breakDuration = 5 * 60;  // 5 minutes
 let timeLeft = timerDuration;
-let timerInterval;
+let timerInterval = null;
+let isPaused = false;
+let isBreak = false;
 
 const timerDisplay = document.getElementById("timer");
 const startBtn = document.getElementById("start");
+const pauseBtn = document.getElementById("pause");
 const resetBtn = document.getElementById("reset");
 const breakBtn = document.getElementById("break");
 
@@ -15,55 +19,84 @@ function updateDisplay() {
   timerDisplay.textContent = `${minutes}:${seconds}`;
 }
 
-function startTimer() {
-  if (timerInterval) return; // don't start twice
+function setMode(mode) {
+  document.body.classList.remove("focus-mode", "break-mode");
+  document.body.classList.add(mode);
+}
 
-  // Tell background.js to mute tabs
+function runTimer(onComplete) {
+  timerInterval = setInterval(() => {
+    if (!isPaused) {
+      timeLeft--;
+      updateDisplay();
+
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        onComplete();
+      }
+    }
+  }, 1000);
+}
+
+function startFocusTimer() {
+  if (timerInterval) return;
+
+  isBreak = false;
+  isPaused = false;
+  timeLeft = timerDuration;
+  setMode("focus-mode");
+  updateDisplay();
+
   chrome.runtime.sendMessage("startFocus", (response) => {
     console.log(response.status);
   });
 
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    updateDisplay();
+  runTimer(() => {
+    alert("Time's up! Take a break 🌿");
+  });
+}
 
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      alert("Time's up! Take a break 🌿");
-    }
-  }, 1000);
+function startBreakTimer() {
+  if (timerInterval) return;
+
+  isBreak = true;
+  isPaused = false;
+  timeLeft = breakDuration;
+  setMode("break-mode");
+  updateDisplay();
+
+  runTimer(() => {
+    alert("Break's over! Time to focus 🧠");
+  });
+}
+
+function pauseTimer() {
+  if (!timerInterval) {
+    console.log("Pause button clicked, but timer isn't running.");
+    return;
+  }
+
+  isPaused = !isPaused;
+  pauseBtn.textContent = isPaused ? "Resume" : "Pause";
 }
 
 function resetTimer() {
   clearInterval(timerInterval);
   timerInterval = null;
-  timeLeft = timerDuration;
+  isPaused = false;
+  timeLeft = isBreak ? breakDuration : timerDuration;
   updateDisplay();
-}
-
-function startBreak() {
-  if (timerInterval) return;
-
-  timeLeft = 5 * 60; // 5 minutes
-  updateDisplay();
-
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    updateDisplay();
-
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      alert("Break's over! Time to focus 🧠");
-    }
-  }, 1000);
+  setMode(isBreak ? "break-mode" : "focus-mode");
+  pauseBtn.textContent = "Pause";
 }
 
 // Hook up the buttons
-startBtn.addEventListener("click", startTimer);
+startBtn.addEventListener("click", startFocusTimer);
+pauseBtn.addEventListener("click", pauseTimer);
 resetBtn.addEventListener("click", resetTimer);
-breakBtn.addEventListener("click", startBreak);
+breakBtn.addEventListener("click", startBreakTimer);
 
 // Initialize display
 updateDisplay();
+setMode("focus-mode");
