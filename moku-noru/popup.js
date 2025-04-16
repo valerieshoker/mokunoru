@@ -53,7 +53,7 @@ function startFocusTimer() {
   });
 
   runTimer(() => {
-    alert("Time's up! Take a break 🌿");
+    alert("time's up! take a break 🌿");
   });
 }
 
@@ -67,7 +67,7 @@ function startBreakTimer() {
   updateDisplay();
 
   runTimer(() => {
-    alert("Break's over! Time to focus 🧠");
+    alert("focus time 🧠");
   });
 }
 
