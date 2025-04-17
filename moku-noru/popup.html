@@ -11,6 +11,30 @@
   <button id="pause">Pause</button>
   <button id="reset">Reset</button>
   <button id="break">Start Break</button>
-  <script src="popup.js"></script>
+
+  <button id="toggle-todo">Show To-Do List</button>
+
+  <div id="todo-container" style="display: none;">
+  <h2>To-Do List</h2>
+
+  <div style="position: relative; display: inline-block;">
+    <label for="category-select">Add to:</label>
+    <select id="category-select">
+      <option value="today">Today</option>
+      <option value="later">Later</option>
+    </select>
+  </div>
+  
+<input type="text" id="todo-input" placeholder="Add a task..." />
+<button id="add-task">Add</button>
+
+<h3>Today</h3>
+<ul id="todo-today"></ul>
+
+<h3>Later</h3>
+<ul id="todo-later"></ul>
+</div>
+
+<script src="popup.js"></script>
 </body>
 </html>

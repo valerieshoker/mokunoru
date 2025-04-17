@@ -1,20 +1,38 @@
 // background.js
 
 chrome.runtime.onInstalled.addListener(() => {
-    console.log("Moku Noru Extension Installed!");
+  console.log("Moku Noru Extension Installed!");
+});
+
+// Open popup.html in a new floating window when the icon is clicked
+chrome.action.onClicked.addListener(() => {
+  chrome.windows.create({
+    url: chrome.runtime.getURL("popup.html"),
+    type: "popup",
+    width: 300,
+    height: 500,
+    focused: true
   });
-  
-  // Listen for the message to start the Pomodoro timer
-  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message === "startFocus") {
-      // Mute all tabs when Pomodoro starts
-      chrome.tabs.query({}, (tabs) => {
-        tabs.forEach((tab) => {
-          chrome.tabs.update(tab.id, { muted: true });
-        });
+});
+
+// Handle messages like muting tabs during Pomodoro
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message === "startFocus") {
+    chrome.tabs.query({}, (tabs) => {
+      tabs.forEach((tab) => {
+        chrome.tabs.update(tab.id, { muted: true });
       });
-      sendResponse({ status: "Started focus mode" });
-    }
-    return true; // Keep the message channel open for async response
-  });
-  
+    });
+    sendResponse({ status: "Started focus mode" });
+  }
+  return true;
+});
+
+chrome.windows.create({
+  url: chrome.runtime.getURL("popup.html"),
+  type: "popup",
+  width: 300,
+  height: 500,  // try increasing to 600 if needed
+  focused: true
+});
+

@@ -12,6 +12,9 @@ const startBtn = document.getElementById("start");
 const pauseBtn = document.getElementById("pause");
 const resetBtn = document.getElementById("reset");
 const breakBtn = document.getElementById("break");
+const toggleBtn = document.getElementById("toggle-todo");
+const todoContainer = document.getElementById("todo-container");
+
 
 function updateDisplay() {
   const minutes = Math.floor(timeLeft / 60).toString().padStart(2, "0");
@@ -100,3 +103,79 @@ breakBtn.addEventListener("click", startBreakTimer);
 // Initialize display
 updateDisplay();
 setMode("focus-mode");
+
+const todoToday = document.getElementById("todo-today");
+const todoLater = document.getElementById("todo-later");
+const categorySelect = document.getElementById("category-select");
+const todoInput = document.getElementById("todo-input");
+const addTaskBtn = document.getElementById("add-task");
+
+function saveTodos() {
+  const today = collectTodosFromList(todoToday);
+  const later = collectTodosFromList(todoLater);
+  chrome.storage.local.set({ todosToday: today, todosLater: later });
+}
+
+function loadTodos() {
+  chrome.storage.local.get(["todosToday", "todosLater"], (result) => {
+    const today = result.todosToday || [];
+    const later = result.todosLater || [];
+    today.forEach((todo) => addTodoToDOM(todo.text, "today", todo.checked));
+    later.forEach((todo) => addTodoToDOM(todo.text, "later", todo.checked));
+  });
+}
+
+function collectTodosFromList(ul) {
+  return Array.from(ul.children).map((li) => ({
+    text: li.querySelector("span").textContent,
+    checked: li.classList.contains("checked")
+  }));
+}
+
+function addTodoToDOM(taskText, category = "today", isChecked = false) {
+  const ul = category === "today" ? todoToday : todoLater;
+
+  const li = document.createElement("li");
+  if (isChecked) li.classList.add("checked");
+
+  const text = document.createElement("span");
+  text.textContent = taskText;
+  li.appendChild(text);
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "❌";
+  deleteBtn.style.marginLeft = "10px";
+
+  deleteBtn.addEventListener("click", () => {
+    li.remove();
+    saveTodos();
+  });
+
+  li.addEventListener("click", (e) => {
+    if (e.target.tagName !== "BUTTON") {
+      li.classList.toggle("checked");
+      saveTodos();
+    }
+  });
+
+  li.appendChild(deleteBtn);
+  ul.appendChild(li);
+}
+
+addTaskBtn.addEventListener("click", () => {
+  const task = todoInput.value.trim();
+  const category = categorySelect.value;
+  if (task) {
+    addTodoToDOM(task, category);
+    saveTodos();
+    todoInput.value = "";
+  }
+});
+
+loadTodos();
+
+toggleBtn.addEventListener("click", () => {
+  const isHidden = todoContainer.style.display === "none";
+  todoContainer.style.display = isHidden ? "block" : "none";
+  toggleBtn.textContent = isHidden ? "Hide To-Do List" : "Show To-Do List";
+});
