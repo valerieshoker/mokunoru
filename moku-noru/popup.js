@@ -136,31 +136,34 @@ function addTodoToDOM(taskText, category = "today", isChecked = false) {
   const ul = category === "today" ? todoToday : todoLater;
 
   const li = document.createElement("li");
-  if (isChecked) li.classList.add("checked");
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.checked = isChecked;
+  checkbox.classList.add("todo-checkbox");
 
   const text = document.createElement("span");
   text.textContent = taskText;
+
+  if (isChecked) li.classList.add("checked");
+
+  checkbox.addEventListener("change", () => {
+    li.classList.toggle("checked");
+    saveTodos();
+  });
+
+  li.appendChild(checkbox);
   li.appendChild(text);
 
-  const deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "❌";
-  deleteBtn.style.marginLeft = "10px";
-
-  deleteBtn.addEventListener("click", () => {
+  // Optional: double-click to delete
+  li.addEventListener("dblclick", () => {
     li.remove();
     saveTodos();
   });
 
-  li.addEventListener("click", (e) => {
-    if (e.target.tagName !== "BUTTON") {
-      li.classList.toggle("checked");
-      saveTodos();
-    }
-  });
-
-  li.appendChild(deleteBtn);
   ul.appendChild(li);
 }
+
 
 addTaskBtn.addEventListener("click", () => {
   const task = todoInput.value.trim();
