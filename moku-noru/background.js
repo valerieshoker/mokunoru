@@ -32,7 +32,7 @@ chrome.windows.create({
   url: chrome.runtime.getURL("popup.html"),
   type: "popup",
   width: 300,
-  height: 500,  // try increasing to 600 if needed
+  height: 500, 
   focused: true
 });
 

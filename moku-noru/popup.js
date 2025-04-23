@@ -94,13 +94,13 @@ function resetTimer() {
   pauseBtn.textContent = "Pause";
 }
 
-// Hook up the buttons
+// hook up buttons
 startBtn.addEventListener("click", startFocusTimer);
 pauseBtn.addEventListener("click", pauseTimer);
 resetBtn.addEventListener("click", resetTimer);
 breakBtn.addEventListener("click", startBreakTimer);
 
-// Initialize display
+// initialize display
 updateDisplay();
 setMode("focus-mode");
 

@@ -128,7 +128,7 @@ button:hover {
     z-index: 2;
   }
   
-  /* ensure dropdown isn't blocked */
+
   select:focus {
     outline: none;
     border-color: #88A096;
@@ -141,5 +141,11 @@ button:hover {
   body {
     overflow: visible !important;
   }
-  
-  
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  li {
+    padding-left: 6px; 
+  }
