@@ -149,3 +149,26 @@ button:hover {
   li {
     padding-left: 6px; 
   }
+
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    animation: fadeUp 2s ease-in-out;
+    z-index: 9999;
+  }
+  
+  @keyframes fadeUp {
+    0% { opacity: 0; transform: translate(-50%, 30px); }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translate(-50%, 0px); }
+  }
+  

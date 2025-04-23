@@ -14,6 +14,12 @@ const resetBtn = document.getElementById("reset");
 const breakBtn = document.getElementById("break");
 const toggleBtn = document.getElementById("toggle-todo");
 const todoContainer = document.getElementById("todo-container");
+const toastMessages = [
+  "task complete!",
+  "u did that",
+  "proud of u pookie",
+  "keep going. your future self is watching."
+];
 
 
 function updateDisplay() {
@@ -70,7 +76,7 @@ function startBreakTimer() {
   updateDisplay();
 
   runTimer(() => {
-    alert("focus time 🧠");
+    alert("focus time");
   });
 }
 
@@ -147,15 +153,25 @@ function addTodoToDOM(taskText, category = "today", isChecked = false) {
 
   if (isChecked) li.classList.add("checked");
 
+  // ✅ Properly scoped checkbox listener
   checkbox.addEventListener("change", () => {
     li.classList.toggle("checked");
     saveTodos();
+
+    // ✅ Toast message logic
+    const toast = document.createElement("div");
+    const message = toastMessages[Math.floor(Math.random() * toastMessages.length)];
+    toast.textContent = message;
+    toast.className = "toast";
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2000);
   });
 
+  // ✅ Append checkbox and text properly
   li.appendChild(checkbox);
   li.appendChild(text);
 
-  // Optional: double-click to delete
+  // ✅ Optional: double-click to delete
   li.addEventListener("dblclick", () => {
     li.remove();
     saveTodos();
@@ -181,4 +197,14 @@ toggleBtn.addEventListener("click", () => {
   const isHidden = todoContainer.style.display === "none";
   todoContainer.style.display = isHidden ? "block" : "none";
   toggleBtn.textContent = isHidden ? "Hide To-Do List" : "Show To-Do List";
+});
+const secretSequence = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'a', 'b'];
+let inputHistory = [];
+
+document.addEventListener("keydown", (e) => {
+  inputHistory.push(e.key);
+  inputHistory = inputHistory.slice(-secretSequence.length);
+  if (secretSequence.every((key, i) => key === inputHistory[i])) {
+    alert("u unlocked dev mode (jk, just impressed you knew this)");
+  }
 });
