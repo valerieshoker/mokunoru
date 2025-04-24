@@ -153,12 +153,12 @@ function addTodoToDOM(taskText, category = "today", isChecked = false) {
 
   if (isChecked) li.classList.add("checked");
 
-  // ✅ Properly scoped checkbox listener
+  // checkbox listener
   checkbox.addEventListener("change", () => {
     li.classList.toggle("checked");
     saveTodos();
 
-    // ✅ Toast message logic
+    // toast message logic
     const toast = document.createElement("div");
     const message = toastMessages[Math.floor(Math.random() * toastMessages.length)];
     toast.textContent = message;
@@ -167,15 +167,30 @@ function addTodoToDOM(taskText, category = "today", isChecked = false) {
     setTimeout(() => toast.remove(), 2000);
   });
 
-  // ✅ Append checkbox and text properly
+  // append checkbox and text properly
   li.appendChild(checkbox);
   li.appendChild(text);
 
-  // ✅ Optional: double-click to delete
-  li.addEventListener("dblclick", () => {
-    li.remove();
+  checkbox.addEventListener("change", () => {
+    li.classList.toggle("checked");
     saveTodos();
+  
+    const toast = document.createElement("div");
+    const message = toastMessages[Math.floor(Math.random() * toastMessages.length)];
+    toast.textContent = message;
+    toast.className = "toast";
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2000);
+  
+    if (checkbox.checked) {
+      li.classList.add("fade-out");
+      setTimeout(() => {
+        li.remove();
+        saveTodos();
+      }, 400); // match CSS duration
+    }
   });
+  
 
   ul.appendChild(li);
 }
@@ -207,4 +222,15 @@ document.addEventListener("keydown", (e) => {
   if (secretSequence.every((key, i) => key === inputHistory[i])) {
     alert("u unlocked dev mode (jk, just impressed you knew this)");
   }
+});
+
+document.querySelectorAll(".section-toggle").forEach(button => {
+  button.addEventListener("click", () => {
+    const targetId = button.getAttribute("data-target");
+    const list = document.getElementById(targetId);
+
+    const isCollapsed = list.style.display === "none";
+    list.style.display = isCollapsed ? "block" : "none";
+    button.textContent = targetId.includes("today") ? "Today" : "Later";
+  });
 });

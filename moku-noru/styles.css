@@ -172,3 +172,35 @@ button:hover {
     100% { opacity: 0; transform: translate(-50%, 0px); }
   }
   
+  @keyframes poofAway {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+  }
+  
+  .fade-out {
+    animation: poofAway 0.4s ease forwards;
+  }
+  
+  .section-toggle {
+    background: none;
+    border: none;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 10px 0 5px;
+    padding: 2px;
+    display: inline-block;
+  }
+  
+  .todo-section ul {
+    margin-top: 5px;
+    padding-left: 20px;
+  }
+  
