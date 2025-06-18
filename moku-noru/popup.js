@@ -152,19 +152,36 @@ function addTodoToDOM(taskText, category = "today", isChecked = false) {
 }
 
 function trashTask(task) {
+  const taskWithTimestamp = {
+    ...task,
+    trashedAt: Date.now()
+  };
+
   chrome.storage.local.get(["trashedTodos"], (result) => {
     const trashed = result.trashedTodos || [];
-    trashed.push(task);
+    trashed.push(taskWithTimestamp);
     chrome.storage.local.set({ trashedTodos: trashed });
   });
 }
 
+
 function renderTrash() {
   chrome.storage.local.get(["trashedTodos"], (result) => {
+    const now = Date.now();
     const trashed = result.trashedTodos || [];
+
+    const fresh = trashed.filter(task => {
+      return !task.trashedAt || (now - task.trashedAt < 7 * 24 * 60 * 60 * 1000);
+    });
+
+    // Clean up expired ones
+    if (fresh.length !== trashed.length) {
+      chrome.storage.local.set({ trashedTodos: fresh });
+    }
+
     trashedList.innerHTML = "";
 
-    trashed.forEach((task, index) => {
+    fresh.forEach((task, index) => {
       const li = document.createElement("li");
       li.textContent = `${task.text} (${task.category})`;
 
@@ -227,7 +244,7 @@ toggleBtn.addEventListener("click", () => {
 trashBtn.addEventListener("click", () => {
   const isHidden = trashBin.style.display === "none";
   trashBin.style.display = isHidden ? "block" : "none";
-  trashBtn.textContent = isHidden ? "Hide Trash" : "🗑️ View Trash";
+  trashBtn.textContent = isHidden ? "Hide Trash" : "View Trash";
   renderTrash();
 });
 
