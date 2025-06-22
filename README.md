@@ -1,5 +1,14 @@
-hi! this is my first real coding project: a chrome extension called Moku-Noru. The title is a wordplay on one of my favorite things (bonus points if you can figure it out!!)
-This project is meant to be a helpful and calming study/productivity extension and the features reflect tools that I use to keep me focused. 
-I designed this with my own ADHD in mind, so everything is meant to be straightforward, visually calming, and made to reduce overwhelm. 
+hi! this is my first real coding project: a chrome extension called Moku-Noru.
+the title is a wordplay on one of my favorite things (bonus points if you can guess it!!)  
 
-Here are some of the key features so far: pomodoro timer (25 min work sessions with a 5 min break), break mode, to-do list (with tabs for today and later), trash bin (automatically deletes after 7 days), and custom styling (uses pastels like forest green and baby pink). 
+this project is a calming productivity tool built for brains that get overwhelmed easily—designed especially with my own ADHD in mind. everything here is meant to be visually soft, minimal, and functional without friction.
+
+### key features so far:
+- **pomodoro timer** (25 min work sessions + 5 min breaks)  
+- **break mode** for short reset rituals  
+- **to-do list** with categories: “today” and “later”  
+- **trash bin** (undeletes for 7 days before clearing automatically)  
+- **custom styling** in forest green and baby pink pastels
+- **little pet** cute tiny pet to cheer you on
+
+more additions in the works! stay tuned 🍵  
