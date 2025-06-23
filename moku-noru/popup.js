@@ -186,7 +186,7 @@ function renderTrash() {
       li.textContent = `${task.text} (${task.category})`;
 
       const restoreBtn = document.createElement("button");
-      restoreBtn.textContent = "↩️ Restore";
+      restoreBtn.textContent = "Restore";
       restoreBtn.addEventListener("click", () => {
         restoreTask(index, task);
       });
