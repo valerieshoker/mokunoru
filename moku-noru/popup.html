@@ -5,14 +5,18 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Pomodoro Timer</h1>
+  <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px;">
+    <h1 style="margin: 0;">Pomodoro Timer</h1>
+    <img src="images/tiny-pet.png" alt="Mia Chia" style="width: 32px; height: 32px;" />
+  </div>
+
   <div id="timer">25:00</div>
   <button id="start">Start</button>
   <button id="pause">Pause</button>
   <button id="reset">Reset</button>
   <button id="break">Start Break</button>
 
-  <button id="toggle-todo">Show To-Do List</button>
+  <button id="toggle-todo">To-Do</button>
 
   <div id="todo-container" style="display: none;">
     <h2>To-Do List</h2>
@@ -46,13 +50,6 @@
     <ul id="trashed-tasks"></ul>
   </div>
 
-  <div style="display: flex; align-items: center; gap: 8px; justify-content: center; margin-bottom: 10px;">
-    <button id="toggle-todo">To-Do List</button>
-    <img src="images/tiny-pet.png" alt="Mia Chia" style="width: 30px;" />
-  </div>
-  
-
-
-<script src="popup.js"></script>
+  <script src="popup.js"></script>
 </body>
 </html>
