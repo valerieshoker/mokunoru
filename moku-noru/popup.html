@@ -6,44 +6,42 @@
 </head>
 <body>
 
-  <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
+  <div style="text-align: center; margin-bottom: 8px;">
     <h1 style="margin: 0;">Pomodoro Timer</h1>
-    <img src="images/tiny-pet.png" alt="Mia Chia" style="width: 28px; height: 28px;" />
   </div>
 
   <div id="timer" style="margin-bottom: 20px;">25:00</div>
 
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 260px; margin: 0 auto;">
-    <button id="start">Start</button>
-    <button id="pause">Pause</button>
-    <button id="reset">Reset</button>
-    <button id="break">Start Break</button>
+  <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 260px; margin: 0 auto;">
+    <button id="start" style="width: 100%;">Start</button>
+    <button id="pause" style="width: 100%;">Pause</button>
+    <button id="reset" style="width: 100%;">Reset</button>
+    <button id="break" style="width: 100%;">Start Break</button>
   </div>
 
-  <div style="text-align: center; margin-top: 18px; font-weight: bold; font-size: 1.1rem;">
-    To-Do
+  <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 20px;">
+    <div style="font-weight: bold; font-size: 1.1rem;">To-Do</div>
+    <img src="images/tiny-pet.png" alt="Mia Chia" style="width: 24px; height: 24px;" />
   </div>
 
-  <div style="text-align: center; margin-top: 4px;">
+  <div style="text-align: center; margin-top: 10px;">
+    <label for="category-select" style="margin-right: 4px;">Add to:</label>
+    <select id="category-select">
+      <option value="today">Today</option>
+      <option value="later">Later</option>
+    </select>
+    <br /><br />
+    <input type="text" id="todo-input" placeholder="Add a task..." style="width: 60%; max-width: 200px;" />
+    <button id="add-task">Add</button>
+  </div>
+
+  <div style="text-align: center; margin-top: 6px;">
     <button id="toggle-trash" style="background: none; border: none; color: #3e3e3e; font-size: 0.85rem; text-decoration: underline; cursor: pointer; padding: 4px;">
       View Trash
     </button>
   </div>
 
-  <div id="todo-container" style="display: none; margin-top: 20px;">
-    <h2>To-Do List</h2>
-
-    <div style="position: relative; display: inline-block;">
-      <label for="category-select">Add to:</label>
-      <select id="category-select">
-        <option value="today">Today</option>
-        <option value="later">Later</option>
-      </select>
-    </div>
-
-    <input type="text" id="todo-input" placeholder="Add a task..." />
-    <button id="add-task">Add</button>
-
+  <div id="todo-container" style="margin-top: 20px;">
     <div class="todo-section">
       <button class="section-toggle" data-target="todo-today">Today</button>
       <ul id="todo-today"></ul>
