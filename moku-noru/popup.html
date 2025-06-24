@@ -5,22 +5,34 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px;">
+
+  <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
     <h1 style="margin: 0;">Pomodoro Timer</h1>
-    <img src="images/tiny-pet.png" alt="Mia Chia" style="width: 32px; height: 32px;" />
+    <img src="images/tiny-pet.png" alt="Mia Chia" style="width: 28px; height: 28px;" />
   </div>
 
-  <div id="timer">25:00</div>
-  <button id="start">Start</button>
-  <button id="pause">Pause</button>
-  <button id="reset">Reset</button>
-  <button id="break">Start Break</button>
+  <div id="timer" style="margin-bottom: 20px;">25:00</div>
 
-  <button id="toggle-todo">To-Do</button>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 260px; margin: 0 auto;">
+    <button id="start">Start</button>
+    <button id="pause">Pause</button>
+    <button id="reset">Reset</button>
+    <button id="break">Start Break</button>
+  </div>
 
-  <div id="todo-container" style="display: none;">
+  <div style="text-align: center; margin-top: 18px; font-weight: bold; font-size: 1.1rem;">
+    To-Do
+  </div>
+
+  <div style="text-align: center; margin-top: 4px;">
+    <button id="toggle-trash" style="background: none; border: none; color: #3e3e3e; font-size: 0.85rem; text-decoration: underline; cursor: pointer; padding: 4px;">
+      View Trash
+    </button>
+  </div>
+
+  <div id="todo-container" style="display: none; margin-top: 20px;">
     <h2>To-Do List</h2>
-  
+
     <div style="position: relative; display: inline-block;">
       <label for="category-select">Add to:</label>
       <select id="category-select">
@@ -28,24 +40,22 @@
         <option value="later">Later</option>
       </select>
     </div>
-  
+
     <input type="text" id="todo-input" placeholder="Add a task..." />
     <button id="add-task">Add</button>
-  
+
     <div class="todo-section">
       <button class="section-toggle" data-target="todo-today">Today</button>
       <ul id="todo-today"></ul>
     </div>
-  
+
     <div class="todo-section">
       <button class="section-toggle" data-target="todo-later">Later</button>
       <ul id="todo-later"></ul>
     </div>
   </div>
-  
-  <button id="toggle-trash">View Trash</button>
 
-  <div id="trash-bin" style="display: none;">
+  <div id="trash-bin" style="display: none; margin-top: 20px;">
     <h3>Trash Bin</h3>
     <ul id="trashed-tasks"></ul>
   </div>

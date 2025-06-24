@@ -235,11 +235,7 @@ addTaskBtn.addEventListener("click", () => {
   }
 });
 
-toggleBtn.addEventListener("click", () => {
-  const isHidden = todoContainer.style.display === "none";
-  todoContainer.style.display = isHidden ? "block" : "none";
-  toggleBtn.textContent = isHidden ? "Hide" : "To-Do";
-});
+const todoOfShame = ["this one task... you know the one"];
 
 trashBtn.addEventListener("click", () => {
   const isHidden = trashBin.style.display === "none";
