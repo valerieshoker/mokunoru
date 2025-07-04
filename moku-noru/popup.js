@@ -10,24 +10,6 @@ const startBtn = document.getElementById("start");
 const pauseBtn = document.getElementById("pause");
 const resetBtn = document.getElementById("reset");
 const breakBtn = document.getElementById("break");
-const toggleBtn = document.getElementById("toggle-todo");
-const todoContainer = document.getElementById("todo-container");
-const toastMessages = [
-  "task complete!",
-  "u did that",
-  "proud of u pookie",
-  "keep going. your future self is watching."
-];
-
-const todoToday = document.getElementById("todo-today");
-const todoLater = document.getElementById("todo-later");
-const categorySelect = document.getElementById("category-select");
-const todoInput = document.getElementById("todo-input");
-const addTaskBtn = document.getElementById("add-task");
-
-const trashBtn = document.getElementById("toggle-trash");
-const trashBin = document.getElementById("trash-bin");
-const trashedList = document.getElementById("trashed-tasks");
 
 function updateDisplay() {
   const minutes = Math.floor(timeLeft / 60).toString().padStart(2, "0");
@@ -64,9 +46,7 @@ function startFocusTimer() {
   chrome.runtime.sendMessage("startFocus", (response) => {
     console.log(response.status);
   });
-  runTimer(() => {
-    alert("time's up! take a break 🌿");
-  });
+  runTimer(() => alert("Time's up! Take a break 🌿"));
 }
 
 function startBreakTimer() {
@@ -76,9 +56,7 @@ function startBreakTimer() {
   timeLeft = breakDuration;
   setMode("break-mode");
   updateDisplay();
-  runTimer(() => {
-    alert("focus time");
-  });
+  runTimer(() => alert("Back to focus! 💪"));
 }
 
 function pauseTimer() {
@@ -97,6 +75,26 @@ function resetTimer() {
   pauseBtn.textContent = "Pause";
 }
 
+function setGreeting() {
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? "Good morning" :
+                   hour < 18 ? "Good afternoon" : "Good evening";
+  document.getElementById("greeting").textContent = greeting;
+}
+
+const todoToday = document.getElementById("todo-today");
+const todoLater = document.getElementById("todo-later");
+const categorySelect = document.getElementById("category-select");
+const todoInput = document.getElementById("todo-input");
+const addTaskBtn = document.getElementById("add-task");
+
+const toastMessages = [
+  "task complete!",
+  "u did that",
+  "proud of u pookie",
+  "keep going. your future self is watching."
+];
+
 function saveTodos() {
   const today = collectTodosFromList(todoToday);
   const later = collectTodosFromList(todoLater);
@@ -104,7 +102,7 @@ function saveTodos() {
 }
 
 function collectTodosFromList(ul) {
-  return Array.from(ul.children).map((li) => ({
+  return Array.from(ul.children).map(li => ({
     text: li.querySelector("span").textContent,
     checked: li.classList.contains("checked")
   }));
@@ -127,8 +125,7 @@ function addTodoToDOM(taskText, category = "today", isChecked = false) {
     li.classList.toggle("checked");
     saveTodos();
     const toast = document.createElement("div");
-    const message = toastMessages[Math.floor(Math.random() * toastMessages.length)];
-    toast.textContent = message;
+    toast.textContent = toastMessages[Math.floor(Math.random() * toastMessages.length)];
     toast.className = "toast";
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 2000);
@@ -137,7 +134,6 @@ function addTodoToDOM(taskText, category = "today", isChecked = false) {
   li.appendChild(checkbox);
   li.appendChild(text);
 
-  // trash logic 
   li.addEventListener("dblclick", () => {
     trashTask({
       text: text.textContent,
@@ -150,6 +146,27 @@ function addTodoToDOM(taskText, category = "today", isChecked = false) {
 
   ul.appendChild(li);
 }
+
+addTaskBtn.addEventListener("click", () => {
+  const task = todoInput.value.trim();
+  const category = categorySelect.value;
+  if (task) {
+    addTodoToDOM(task, category);
+    saveTodos();
+    todoInput.value = "";
+  }
+});
+
+function loadTodos() {
+  chrome.storage.local.get(["todosToday", "todosLater"], (result) => {
+    (result.todosToday || []).forEach(todo => addTodoToDOM(todo.text, "today", todo.checked));
+    (result.todosLater || []).forEach(todo => addTodoToDOM(todo.text, "later", todo.checked));
+  });
+}
+
+const trashBtn = document.getElementById("toggle-trash");
+const trashBin = document.getElementById("trash-bin");
+const trashedList = document.getElementById("trashed-tasks");
 
 function trashTask(task) {
   const taskWithTimestamp = {
@@ -164,17 +181,12 @@ function trashTask(task) {
   });
 }
 
-
 function renderTrash() {
   chrome.storage.local.get(["trashedTodos"], (result) => {
     const now = Date.now();
     const trashed = result.trashedTodos || [];
 
-    const fresh = trashed.filter(task => {
-      return !task.trashedAt || (now - task.trashedAt < 7 * 24 * 60 * 60 * 1000);
-    });
-
-    // Clean up expired ones
+    const fresh = trashed.filter(task => !task.trashedAt || (now - task.trashedAt < 7 * 24 * 60 * 60 * 1000));
     if (fresh.length !== trashed.length) {
       chrome.storage.local.set({ trashedTodos: fresh });
     }
@@ -216,57 +228,23 @@ function restoreTask(index, task) {
   });
 }
 
+trashBtn.addEventListener("click", () => {
+  const isHidden = trashBin.classList.contains("hidden");
+  trashBin.classList.toggle("hidden", !isHidden);
+  trashBtn.textContent = isHidden ? "Hide Archive" : "Archive";
+  renderTrash();
+});
+
 startBtn.addEventListener("click", startFocusTimer);
 pauseBtn.addEventListener("click", pauseTimer);
 resetBtn.addEventListener("click", resetTimer);
 breakBtn.addEventListener("click", startBreakTimer);
 
+setGreeting();
 updateDisplay();
 setMode("focus-mode");
 loadTodos();
 
-addTaskBtn.addEventListener("click", () => {
-  const task = todoInput.value.trim();
-  const category = categorySelect.value;
-  if (task) {
-    addTodoToDOM(task, category);
-    saveTodos();
-    todoInput.value = "";
-  }
-});
-
-const todoOfShame = ["this one task... you know the one"];
-
-trashBtn.addEventListener("click", () => {
-  const isHidden = trashBin.style.display === "none";
-  trashBin.style.display = isHidden ? "block" : "none";
-  trashBtn.textContent = isHidden ? "Hide Trash" : "View Trash";
-  renderTrash();
-});
-
-function loadTodos() {
-  chrome.storage.local.get(["todosToday", "todosLater"], (result) => {
-    const today = result.todosToday || [];
-    const later = result.todosLater || [];
-    today.forEach((todo) => addTodoToDOM(todo.text, "today", todo.checked));
-    later.forEach((todo) => addTodoToDOM(todo.text, "later", todo.checked));
-  });
-}
-
-document.querySelectorAll(".section-toggle").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const targetId = btn.dataset.target;
-    const section = document.getElementById(targetId);
-    if (section) {
-      const isHidden = section.style.display === "none";
-      section.style.display = isHidden ? "block" : "none";
-      btn.textContent = isHidden ? targetId === "todo-today" ? "Today" : "Later" : `Show ${btn.textContent}`;
-    }
-  });
-});
-
-
-// easter egg
 const secretSequence = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'a', 'b'];
 let inputHistory = [];
 document.addEventListener("keydown", (e) => {

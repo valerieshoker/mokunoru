@@ -1,63 +1,56 @@
-<!DOCTYPE html>
-<html>
 <head>
-  <title>Moku Noru Pomodoro</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>Moku Noru</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <div style="text-align: center; margin-bottom: 8px;">
-    <h1 style="margin: 0;">Pomodoro Timer</h1>
-  </div>
-
-  <div id="timer" style="margin-bottom: 20px;">25:00</div>
-
-  <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 260px; margin: 0 auto;">
-    <button class="grid-btn" id="start">Start</button>
-    <button class="grid-btn" id="pause">Pause</button>
-    <button class="grid-btn" id="reset">Reset</button>
-    <button class="grid-btn" id="break">Start Break</button>
-  </div>
-  
-
-  <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 20px;">
-    <div style="font-weight: bold; font-size: 1.1rem;">To-Do</div>
-    <img src="images/tiny-pet.png" alt="Mia Chia" style="width: 24px; height: 24px;" />
-  </div>
-
-  <div style="text-align: center; margin-top: 10px;">
-    <label for="category-select" style="margin-right: 4px;">Add to:</label>
-    <select id="category-select">
-      <option value="today">Today</option>
-      <option value="later">Later</option>
-    </select>
-    <br /><br />
-    <input type="text" id="todo-input" placeholder="Add a task..." style="width: 60%; max-width: 200px;" />
-    <button id="add-task">Add</button>
-  </div>
-
-  <div style="text-align: center; margin-top: 6px;">
-    <button id="toggle-trash" style="background: none; border: none; color: #3e3e3e; font-size: 0.85rem; text-decoration: underline; cursor: pointer; padding: 4px;">
-      View Trash
-    </button>
-  </div>
-
-  <div id="todo-container" style="margin-top: 20px;">
-    <div class="todo-section">
-      <button class="section-toggle" data-target="todo-today">Today</button>
-      <ul id="todo-today"></ul>
+  <header>
+    <h1 id="greeting">Good Morning</h1>
+    <div id="timer">25:00</div>
+    <div class="timer-controls">
+      <button id="start">Start</button>
+      <button id="pause">Pause</button>
+      <button id="reset">Reset</button>
+      <button id="break">Break</button>
     </div>
+  </header>
 
-    <div class="todo-section">
-      <button class="section-toggle" data-target="todo-later">Later</button>
-      <ul id="todo-later"></ul>
-    </div>
-  </div>
+  <main>
+    <section id="todo-section">
+      <h2>To-Do</h2>
+      <div id="todo-lists">
+        <div class="todo-column">
+          <h3>Today</h3>
+          <ul id="todo-today"></ul>
+        </div>
+        <div class="todo-column">
+          <h3>Later</h3>
+          <ul id="todo-later"></ul>
+        </div>
+      </div>
+      <div class="todo-inputs">
+        <input type="text" id="todo-input" placeholder="New task..." />
+        <select id="category-select">
+          <option value="today">Today</option>
+          <option value="later">Later</option>
+        </select>
+        <button id="add-task">Add</button>
+      </div>
+    </section>
 
-  <div id="trash-bin" style="display: none; margin-top: 20px;">
-    <h3>Trash Bin</h3>
-    <ul id="trashed-tasks"></ul>
-  </div>
+    <section id="trash-bin" class="hidden">
+      <h3>Archive</h3>
+      <ul id="trashed-tasks"></ul>
+    </section>
+  </main>
+
+  <nav id="bottom-nav">
+    <button id="nav-tools">Tools</button>
+    <button id="toggle-trash">Archive</button>
+    <button id="nav-settings">Settings</button>
+  </nav>
 
   <script src="popup.js"></script>
 </body>
