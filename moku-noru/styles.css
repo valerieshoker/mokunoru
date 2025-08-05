@@ -229,3 +229,80 @@ input[type="checkbox"]:checked::before {
 .hidden {
   display: none !important;
 }
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(3px); 
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+  background: linear-gradient(to bottom, #fefcf8, #fdf6ec);
+  padding: 20px;
+  width: 400px;
+  max-width: 90%;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  position: relative;
+  font-family: 'EB Garamond', serif;
+  animation: slideUp 0.25s ease-out;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #666;
+}
+
+body.dark-mode {
+  background: #2b1f1a; 
+  color: #f8f1e4; 
+}
+
+body.dark-mode .modal-content {
+  background: linear-gradient(to bottom, #3a2a23, #2b1f1a);
+  color: #f8f1e4;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+body.dark-mode button {
+  background: #4a3a33;
+  color: #f8f1e4;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+body.dark-mode #todo-today li,
+body.dark-mode #todo-later li,
+body.dark-mode #todo-input,
+body.dark-mode #category-select {
+  background: #3a2a23;
+  color: #f8f1e4;
+  border: 1px solid #5a4a43;
+}
+
+body.dark-mode #todo-input::placeholder {
+  color: #d8cfc5;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes slideUp {
+  from {transform: translateY(20px); opacity: 0;}
+  to {transform: translateY(0); opacity: 1;}
+}

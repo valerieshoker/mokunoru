@@ -245,6 +245,7 @@ updateDisplay();
 setMode("focus-mode");
 loadTodos();
 
+
 const secretSequence = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'a', 'b'];
 let inputHistory = [];
 document.addEventListener("keydown", (e) => {
@@ -254,3 +255,67 @@ document.addEventListener("keydown", (e) => {
     alert("u unlocked dev mode (jk, just impressed you knew this)");
   }
 });
+
+
+const toolsModal = document.getElementById('toolsModal');
+const settingsModal = document.getElementById('settingsModal');
+const closeTools = document.getElementById('closeTools');
+const closeSettings = document.getElementById('closeSettings');
+
+document.getElementById('nav-tools').addEventListener('click', () => toolsModal.style.display = 'flex');
+document.getElementById('nav-settings').addEventListener('click', () => settingsModal.style.display = 'flex');
+
+closeTools.addEventListener('click', () => toolsModal.style.display = 'none');
+closeSettings.addEventListener('click', () => settingsModal.style.display = 'none');
+
+window.addEventListener('click', (e) => {
+  if (e.target === toolsModal) toolsModal.style.display = 'none';
+  if (e.target === settingsModal) settingsModal.style.display = 'none';
+});
+
+
+const toggleThemeBtn = document.getElementById('toggleTheme');
+const focusDurationInput = document.getElementById('focusDuration');
+const breakDurationInput = document.getElementById('breakDurationInput');
+const saveDurationsBtn = document.getElementById('saveDurations');
+
+toggleThemeBtn.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+  localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+});
+
+window.addEventListener('load', () => {
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-mode');
+  }
+
+  const savedFocus = localStorage.getItem('focusDuration');
+  const savedBreak = localStorage.getItem('breakDuration');
+  if (savedFocus) {
+    focusDurationInput.value = savedFocus;
+    timerDuration = parseInt(savedFocus) * 60;
+    timeLeft = timerDuration;
+    updateDisplay();
+  }
+  if (savedBreak) {
+    breakDurationInput.value = savedBreak;
+    breakDuration = parseInt(savedBreak) * 60;
+  }
+});
+
+saveDurationsBtn.addEventListener('click', () => {
+  const focusVal = parseInt(focusDurationInput.value);
+  const breakVal = parseInt(breakDurationInput.value);
+  if (focusVal > 0 && breakVal > 0) {
+    timerDuration = focusVal * 60;
+    breakDuration = breakVal * 60;
+    timeLeft = timerDuration;
+    updateDisplay();
+    localStorage.setItem('focusDuration', focusVal);
+    localStorage.setItem('breakDuration', breakVal);
+    alert('Pomodoro durations updated!');
+  } else {
+    alert('Please enter valid numbers.');
+  }
+});
+

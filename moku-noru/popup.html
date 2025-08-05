@@ -52,6 +52,35 @@
     <button id="nav-settings">Settings</button>
   </nav>
 
+    <div id="toolsModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeTools">&times;</span>
+        <h2>Tools & Instructions</h2>
+        <p>Welcome to Moku Noru! Here’s how to use it:</p>
+        <ul>
+          <li>Use the Pomodoro timer for focused work sessions.</li>
+          <li>Organize tasks under "Today" and "Later."</li>
+          <li>Use breaks to stay refreshed and productive.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="settingsModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeSettings">&times;</span>
+        <h2>Settings</h2>
+        <button id="toggleTheme">Toggle Dark/Light Mode</button>
+        <hr>
+        <h3>Pomodoro Durations</h3>
+        <label for="focusDuration">Focus (minutes):</label>
+        <input type="number" id="focusDuration" min="1" max="120">
+        <label for="breakDurationInput">Break (minutes):</label>
+        <input type="number" id="breakDurationInput" min="1" max="60">
+        <button id="saveDurations">Save</button>
+      </div>
+    </div>
+
+
   <script src="popup.js"></script>
 </body>
 </html>
