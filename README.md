@@ -10,8 +10,6 @@ this project is a calming productivity tool built for brains that get overwhelme
 - **archive** undeletes are stores for 7 days
 - **custom styling** vintage cream + black palette, classic typography
 - **little pet** tiny pet to cheer you on
-
-  ### in progress:
 - **gentle animations and toasts**
 - **toggle views for tools/settings/archive**
 
