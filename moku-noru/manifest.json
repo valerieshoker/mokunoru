@@ -4,14 +4,14 @@
   "version": "1.0",
   "description": "A study helper extension with Pomodoro timer, custom background, to-do list, and notification silencer.",
   "action": {
-    "default_title": "Moku Noru"
+    "default_title": "Moku Noru",
+    "default_popup": "popup.html"
   },
   "background": {
     "service_worker": "background.js"
   },
   "permissions": [
-    "windows",
-    "tabs",
-    "storage"
+    "storage",
+    "tabs"
   ]
 }

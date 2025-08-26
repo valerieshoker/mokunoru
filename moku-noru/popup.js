@@ -154,8 +154,18 @@ addTaskBtn.addEventListener("click", () => {
     addTodoToDOM(task, category);
     saveTodos();
     todoInput.value = "";
+
+    // 🐾 bounce the mascot when a task is added
+    const mascot = document.getElementById("mascot");
+    if (mascot) {
+      mascot.classList.add("bounce");
+      mascot.addEventListener("animationend", () => {
+        mascot.classList.remove("bounce");
+      }, { once: true });
+    }
   }
 });
+
 
 function loadTodos() {
   chrome.storage.local.get(["todosToday", "todosLater"], (result) => {
