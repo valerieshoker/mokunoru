@@ -1,4 +1,4 @@
-hi! this is my first real coding project: a chrome extension called Moku-Noru.
+hi! this is my first real coding project: a chrome extension called Moku Noru.
 the title is a wordplay on one of my favorite things (bonus points if you can guess it!!)  
 
 this project is a calming productivity tool built for brains that get overwhelmed easily — designed especially with my own ADHD in mind. everything here is meant to be visually soft, minimal, and functional without friction.
