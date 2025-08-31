@@ -17,7 +17,7 @@
 
 html, body {
   min-height: 100vh;     
-  overflow-y: auto; 
+  overflow: visible;
 }
 
 body {
@@ -34,11 +34,13 @@ body {
   box-sizing: border-box;
   font-size: 16px;
   line-height: 1.6;
+  overflow: visible;
 }
 
 main {
   flex: 1 1 auto;
-  padding-bottom: calc(var(--nav-h) + 12px);  /* << key line */
+  overflow-y: auto;
+  padding-bottom: 60px;
 }
 
 /* Typography */
@@ -185,6 +187,7 @@ input[type="checkbox"]:checked::before {
 /* To-Do Input */
 .todo-inputs {
   margin-top: 10px;
+  margin-bottom: 60px; 
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -230,17 +233,13 @@ input[type="checkbox"]:checked::before {
 }
 
 #bottom-nav {
-  position: sticky;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: var(--nav-h);
-  background: var(--bg);
-  border-top: 1px solid var(--accent);
+  position: static;              
   display: flex;
   justify-content: space-around;
-  padding: 0 8px;
-  z-index: 1;
+  align-items: center;
+  border-top: 1px solid var(--accent);
+  padding: 8px 0;
+  background: var(--bg);
 }
 
 #bottom-nav button {
