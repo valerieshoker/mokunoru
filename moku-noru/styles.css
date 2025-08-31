@@ -6,6 +6,7 @@
   --button-text: #fdfcf9;
   --border-radius: 6px;
   --font-main: 'EB Garamond', serif;
+  --nav-h: 56px;
 }
 
 * {
@@ -20,6 +21,8 @@ html, body {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   font-family: var(--font-main);
   background-color: var(--bg);
   color: var(--text);
@@ -31,6 +34,11 @@ body {
   box-sizing: border-box;
   font-size: 16px;
   line-height: 1.6;
+}
+
+main {
+  flex: 1 1 auto;
+  padding-bottom: calc(var(--nav-h) + 12px);  /* << key line */
 }
 
 /* Typography */
@@ -222,16 +230,17 @@ input[type="checkbox"]:checked::before {
 }
 
 #bottom-nav {
-  position: fixed;
+  position: sticky;
   bottom: 0;
   left: 0;
-  width: 100%;
+  right: 0;
+  height: var(--nav-h);
   background: var(--bg);
   border-top: 1px solid var(--accent);
   display: flex;
   justify-content: space-around;
-  padding: 8px 0;
-  z-index: 10;
+  padding: 0 8px;
+  z-index: 1;
 }
 
 #bottom-nav button {
