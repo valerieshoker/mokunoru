@@ -16,32 +16,28 @@
 }
 
 html, body {
-  min-height: 100vh;     
-  overflow: visible;
+  width: 400px;
+  height: 600px;          
+  margin: 0;
+  padding: 0;
 }
 
 body {
   display: flex;
   flex-direction: column;
-  font-family: var(--font-main);
-  background-color: var(--bg);
+  overflow: hidden;       
+  background: var(--bg);
   color: var(--text);
-  padding: 16px;
-  width: 400px;
-  min-width: 400px;
-  min-height: 100vh;
-  height: 800px;
-  box-sizing: border-box;
-  font-size: 16px;
+  font-family: var(--font-main);
   line-height: 1.6;
-  overflow: hidden;
+  padding: 16px;          
 }
 
 main {
   flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-  padding-bottom: 60px;
+  min-height: 0;         
+  overflow-y: auto;       
+  padding-bottom: calc(var(--nav-h) + 8px); 
 }
 
 /* Typography */
@@ -233,13 +229,15 @@ input[type="checkbox"]:checked::before {
 }
 
 #bottom-nav {
-  position: static;              
+  position: static;
+  flex: 0 0 var(--nav-h);
+  height: var(--nav-h);
   display: flex;
   justify-content: space-around;
   align-items: center;
   border-top: 1px solid var(--accent);
-  padding: 8px 0;
   background: var(--bg);
+  padding: 0 8px;
 }
 
 #bottom-nav button {
