@@ -38,7 +38,8 @@ main {
   min-height: 0;         
   overflow-y: auto;       
   padding-bottom: calc(var(--nav-h) + 8px); 
-  outline: 2px solid red;
+  outline: 4px dashed red !important;
+  background: rgba(255,0,0,0.05); 
 }
 
 /* Typography */
