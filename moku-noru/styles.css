@@ -30,15 +30,16 @@ body {
   width: 400px;
   min-width: 400px;
   min-height: 100vh;
-  height: auto;
+  height: 800px;
   box-sizing: border-box;
   font-size: 16px;
   line-height: 1.6;
-  overflow: visible;
+  overflow: hidden;
 }
 
 main {
   flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
   padding-bottom: 60px;
 }
@@ -187,7 +188,6 @@ input[type="checkbox"]:checked::before {
 /* To-Do Input */
 .todo-inputs {
   margin-top: 10px;
-  margin-bottom: 60px; 
   display: flex;
   flex-direction: column;
   gap: 6px;
