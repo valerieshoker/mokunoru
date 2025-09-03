@@ -329,3 +329,16 @@ saveDurationsBtn.addEventListener('click', () => {
   }
 });
 
+/* pls work :( */
+
+function resizePopup() {
+  document.body.style.height = "auto";
+  document.documentElement.style.height = "auto";
+  document.body.style.minHeight = document.body.scrollHeight + "px";
+}
+
+window.addEventListener("load", () => {
+  resizePopup();
+  setTimeout(resizePopup, 50);
+  setTimeout(resizePopup, 150);
+});
