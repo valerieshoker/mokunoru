@@ -84,9 +84,34 @@ function setGreeting() {
 
 const todoToday = document.getElementById("todo-today");
 const todoLater = document.getElementById("todo-later");
-const categorySelect = document.getElementById("category-select");
 const todoInput = document.getElementById("todo-input");
 const addTaskBtn = document.getElementById("add-task");
+
+// enable drag + drop between Today and Later
+[todoToday, todoLater].forEach((ul, i) => {
+  ul.addEventListener("dragover", (e) => {
+    e.preventDefault(); // allow drop
+    ul.style.background = "rgba(0,0,0,0.05)";
+  });
+
+  ul.addEventListener("dragleave", () => {
+    ul.style.background = "";
+  });
+
+  ul.addEventListener("drop", (e) => {
+    e.preventDefault();
+    ul.style.background = "";
+
+    const data = JSON.parse(e.dataTransfer.getData("text/plain"));
+
+    const dragging = document.querySelector(".dragging");
+    if (dragging) dragging.remove();
+
+    addTodoToDOM(data.text, i === 0 ? "today" : "later", data.checked);
+    saveTodos();
+  });
+});
+
 
 const toastMessages = [
   "task complete!",
@@ -112,6 +137,8 @@ function addTodoToDOM(taskText, category = "today", isChecked = false) {
   const ul = category === "today" ? todoToday : todoLater;
 
   const li = document.createElement("li");
+  li.draggable = true;
+
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.checked = isChecked;
@@ -120,6 +147,20 @@ function addTodoToDOM(taskText, category = "today", isChecked = false) {
   const text = document.createElement("span");
   text.textContent = taskText;
   if (isChecked) li.classList.add("checked");
+
+  // Drag support
+  li.addEventListener("dragstart", (e) => {
+    e.dataTransfer.setData("text/plain", JSON.stringify({
+      text: taskText,
+      checked: isChecked
+    }));
+    e.dataTransfer.effectAllowed = "move";
+    li.classList.add("dragging");
+  });
+
+  li.addEventListener("dragend", () => {
+    li.classList.remove("dragging");
+  });
 
   checkbox.addEventListener("change", () => {
     li.classList.toggle("checked");
@@ -131,9 +172,6 @@ function addTodoToDOM(taskText, category = "today", isChecked = false) {
     setTimeout(() => toast.remove(), 2000);
   });
 
-  li.appendChild(checkbox);
-  li.appendChild(text);
-
   li.addEventListener("dblclick", () => {
     trashTask({
       text: text.textContent,
@@ -144,14 +182,15 @@ function addTodoToDOM(taskText, category = "today", isChecked = false) {
     saveTodos();
   });
 
+  li.appendChild(checkbox);
+  li.appendChild(text);
   ul.appendChild(li);
 }
 
 addTaskBtn.addEventListener("click", () => {
   const task = todoInput.value.trim();
-  const category = categorySelect.value;
   if (task) {
-    addTodoToDOM(task, category);
+    addTodoToDOM(task, "today"); // ✅ always goes to Today initially
     saveTodos();
     todoInput.value = "";
 
@@ -329,7 +368,7 @@ saveDurationsBtn.addEventListener('click', () => {
   }
 });
 
-/* pls work :( */
+/* if ur gonna clone sm times, at least submit a pr and help...damn */
 
 function resizePopup() {
   document.body.style.height = "auto";
