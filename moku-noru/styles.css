@@ -39,8 +39,6 @@ main {
   min-height: 0;         
   overflow-y: auto;       
   padding-bottom: calc(var(--nav-h) + 8px); 
-  outline: 4px dashed red !important;
-  background: rgba(255,0,0,0.05); 
 }
 
 /* Typography */
@@ -356,12 +354,6 @@ body.dark-mode #todo-input::placeholder {
 
 .bounce {
   animation: bounce 0.6s;
-}
-
-/* center the headers for Today and Later lists */
-#todo-section h2 {
-  text-align: center;
-  width: 100%;
 }
 
 #settingsModal button {

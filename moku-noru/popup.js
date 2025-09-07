@@ -306,21 +306,35 @@ document.addEventListener("keydown", (e) => {
 });
 
 
-const toolsModal = document.getElementById('toolsModal');
+// Modal references
+const instructionsModal = document.getElementById('instructionsModal');
 const settingsModal = document.getElementById('settingsModal');
-const closeTools = document.getElementById('closeTools');
+const closeInstructions = document.getElementById('closeInstructions');
 const closeSettings = document.getElementById('closeSettings');
 
-document.getElementById('nav-tools').addEventListener('click', () => toolsModal.style.display = 'flex');
-document.getElementById('nav-settings').addEventListener('click', () => settingsModal.style.display = 'flex');
+// Nav buttons
+document.getElementById('nav-instructions').addEventListener('click', () => {
+  instructionsModal.style.display = 'flex';
+});
 
-closeTools.addEventListener('click', () => toolsModal.style.display = 'none');
-closeSettings.addEventListener('click', () => settingsModal.style.display = 'none');
+document.getElementById('nav-settings').addEventListener('click', () => {
+  settingsModal.style.display = 'flex';
+});
 
+// Close buttons
+closeInstructions.addEventListener('click', () => {
+  instructionsModal.style.display = 'none';
+});
+closeSettings.addEventListener('click', () => {
+  settingsModal.style.display = 'none';
+});
+
+// Close when clicking outside modal
 window.addEventListener('click', (e) => {
-  if (e.target === toolsModal) toolsModal.style.display = 'none';
+  if (e.target === instructionsModal) instructionsModal.style.display = 'none';
   if (e.target === settingsModal) settingsModal.style.display = 'none';
 });
+
 
 
 const toggleThemeBtn = document.getElementById('toggleTheme');
@@ -367,8 +381,6 @@ saveDurationsBtn.addEventListener('click', () => {
     alert('Please enter valid numbers.');
   }
 });
-
-/* if ur gonna clone sm times, at least submit a pr and help...damn */
 
 function resizePopup() {
   document.body.style.height = "auto";
