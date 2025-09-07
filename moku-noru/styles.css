@@ -357,3 +357,44 @@ body.dark-mode #todo-input::placeholder {
 .bounce {
   animation: bounce 0.6s;
 }
+
+/* center the headers for Today and Later lists */
+#todo-section h2 {
+  text-align: center;
+  width: 100%;
+}
+
+#settingsModal button {
+  border-radius: 6px;   
+  padding: 6px 12px;
+  border: 1px solid var(--accent, #847f74);
+  background-color: var(--button-bg, #1c1c1c);
+  color: var(--button-text, #fdfcf9);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+#settingsModal button:hover {
+  background-color: #333;
+  transform: translateY(-1px);
+}
+
+#settingsModal button:active {
+  transform: translateY(0);
+}
+
+#settingsModal input[type="number"] {
+  border-radius: 6px;    
+  padding: 4px 8px;
+  border: 1px solid var(--accent, #847f74);
+  background-color: var(--bg, #fdfcf9);
+  color: var(--text, #1c1c1c);
+  width: 70px;              
+  box-sizing: border-box;
+}
+
+#settingsModal input[type="number"]:focus {
+  outline: none;
+  border-color: var(--button-bg, #1c1c1c); 
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
+}

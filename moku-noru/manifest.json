@@ -1,19 +1,20 @@
 {
   "manifest_version": 3,
   "name": "Moku Noru",
-  "version": "1.0",
-  "description": "A study helper extension with Pomodoro timer, custom background, to-do list, and notification silencer.",
+  "version": "1.4.0",
+  "description": "Focus toolkit: Pomodoro + To-Do with an elegant UI.",
   "action": {
-    "default_title": "Moku Noru",
-    "default_popup": "popup.html",
-    "default_width": 400,
-    "default_height": 600
+    "default_title": "Moku Noru"
   },
   "background": {
     "service_worker": "background.js"
   },
   "permissions": [
     "storage",
-    "tabs"
-  ]
+    "tabs" ],
+    "icons": {
+      "16": "images/tiny-pet.png",
+      "48": "images/tiny-pet.png",
+      "128": "images/tiny-pet.png"
+    }
 }

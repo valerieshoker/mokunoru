@@ -1,18 +1,33 @@
 // background.js
+let appWindowId = null;
 
-chrome.runtime.onInstalled.addListener(() => {
-  console.log("Moku Noru Extension Installed!");
+async function openOrFocusAppWindow() {
+  if (appWindowId !== null) {
+    try {
+      await chrome.windows.update(appWindowId, { focused: true });
+      return;
+    } catch (_) {
+      appWindowId = null;
+    }
+  }
+
+  const w = await chrome.windows.create({
+    url: chrome.runtime.getURL("popup.html"),
+    type: "popup",
+    width: 420,
+    height: 640,
+    focused: true
+  });
+
+  appWindowId = w.id;
+}
+
+chrome.action.onClicked.addListener(() => {
+  openOrFocusAppWindow();
 });
 
-// Handle messages like muting tabs during Pomodoro
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message === "startFocus") {
-    chrome.tabs.query({}, (tabs) => {
-      tabs.forEach((tab) => {
-        chrome.tabs.update(tab.id, { muted: true });
-      });
-    });
-    sendResponse({ status: "Started focus mode" });
+chrome.windows.onRemoved.addListener((closedId) => {
+  if (closedId === appWindowId) {
+    appWindowId = null;
   }
-  return true;
 });
