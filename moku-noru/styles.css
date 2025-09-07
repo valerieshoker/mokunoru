@@ -330,6 +330,39 @@ body.dark-mode #todo-input::placeholder {
   color: #d8cfc5;
 }
 
+/* Make timer and todo buttons clearer in dark mode */
+body.dark-mode .timer-controls button,
+body.dark-mode #add-task {
+  background-color: #4a3a33; 
+  color: #f8f1e4;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .timer-controls button:hover,
+body.dark-mode #add-task:hover {
+  background-color: #5a463d; 
+}
+
+body.dark-mode #bottom-nav {
+  background: #2b1f1a;
+  border-top: 1px solid #5a4a43;
+}
+
+body.dark-mode #bottom-nav button {
+  color: #f8f1e4;
+}
+
+body.dark-mode #bottom-nav button:hover {
+  border-bottom: 2px solid #f8f1e4;
+}
+
+body.dark-mode #todo-input {
+  background: #3a2a23;
+  color: #f8f1e4;
+  border: 1px solid #5a4a43;
+}
+
+
 @keyframes fadeIn {
   from {opacity: 0;}
   to {opacity: 1;}
