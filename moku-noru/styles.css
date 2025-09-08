@@ -17,7 +17,7 @@
 
 html, body {
   width: 400px;
-  height: auto;    
+  height: 600px;    
   min-height: 500px;        
   margin: 0;
   padding: 0;
@@ -34,11 +34,23 @@ body {
   padding: 16px;          
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
 main {
   flex: 1 1 auto;
   min-height: 0;         
   overflow-y: auto;       
   padding-bottom: calc(var(--nav-h) + 8px); 
+}
+
+.main-scroll {
+  flex: 1 1 auto;
+  overflow: auto;          
+  padding-bottom: 16px;      
 }
 
 /* Typography */
@@ -216,7 +228,17 @@ input[type="checkbox"]:checked::before {
 
 /* Archive Section */
 #trash-bin {
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0; 
+}
+
+#trashed-tasks {               
+  overflow: auto;           
+  max-height: 260px;        
+  padding-right: 6px;         
+  border-radius: var(--border-radius);
 }
 
 #trashed-tasks li button {
@@ -229,8 +251,23 @@ input[type="checkbox"]:checked::before {
   cursor: pointer;
 }
 
+#trashed-tasks::-webkit-scrollbar { width: 8px; }
+#trashed-tasks::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.15);
+  border-radius: 8px;
+}
+
+body.dark-mode #trashed-tasks {
+  background: #3a2a23;           
+  border: 1px solid #5a4a43;
+}
+body.dark-mode #trashed-tasks::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.2);
+}
+
 #bottom-nav {
-  position: static;
+  position: sticky;
+  bottom: 0;
   flex: 0 0 var(--nav-h);
   height: var(--nav-h);
   display: flex;
@@ -239,6 +276,7 @@ input[type="checkbox"]:checked::before {
   border-top: 1px solid var(--accent);
   background: var(--bg);
   padding: 0 8px;
+  z-index: 5;
 }
 
 #bottom-nav button {
